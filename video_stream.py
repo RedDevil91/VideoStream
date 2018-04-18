@@ -11,10 +11,13 @@ client_socket, address = s.accept()
 
 cap = cv2.VideoCapture(0)
 
-ret, frame = cap.read()
-grayscale = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-_, img_data = cv2.imencode(".jpg", grayscale)
-client_socket.sendall(img_data)
+while True:
+    ret, frame = cap.read()
+    grayscale = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    _, img_data = cv2.imencode(".jpg", grayscale)
+    client_socket.sendall(img_data)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
 
 client_socket.close()
 cap.release()
