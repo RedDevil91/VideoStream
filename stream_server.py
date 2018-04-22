@@ -6,7 +6,7 @@ import Queue
 
 MAX_RCV_LENGTH = 2048
 
-HOST = 'localhost'
+HOST = '0.0.0.0'
 PORT = 9999
 
 incoming_images = Queue.Queue()
