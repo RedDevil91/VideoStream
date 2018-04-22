@@ -17,7 +17,7 @@ while True:
         if response == "OK":
             sock.sendall(img_data)
             sock.recv(1024)
-    finally:
+    except socket.error:
         sock.close()
-
+        break
 cap.release()
