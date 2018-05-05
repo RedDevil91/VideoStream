@@ -3,6 +3,7 @@ import numpy as np
 import SocketServer
 import threading
 import Queue
+import time
 
 MAX_RCV_LENGTH = 2048
 
@@ -14,11 +15,14 @@ incoming_images = Queue.Queue()
 
 class ThreadedRequestHandler(SocketServer.BaseRequestHandler):
     def handle(self):
-        length = int(self.request.recv(1024))
+        length = int(self.request.recv(8))
         self.request.sendall("OK")
+
+        start = time.time()
         image = self.get_image_from_stream(length)
         incoming_images.put(image)
         self.request.sendall("OK")
+        print "Image data time: ", time.time() - start
 
     def get_image_from_stream(self, image_length):
         chunks = []
